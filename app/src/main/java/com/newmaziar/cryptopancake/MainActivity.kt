@@ -28,7 +28,8 @@ class MainActivity : ComponentActivity() {
                     CryptoListScreen(
                         state = state,
                         modifier = Modifier.padding(innerPadding),
-                        onCurrencySwitch = { viewModel.action(CryptoListAction.SwitchCurrency) }
+                        onCurrencySwitch = { viewModel.action(CryptoListAction.SwitchCurrency) },
+                        onRefresh = { viewModel.action(CryptoListAction.RefreshCryptoData) }
                     )
                 }
             }

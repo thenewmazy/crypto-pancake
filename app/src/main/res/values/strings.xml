@@ -10,4 +10,6 @@
     <string name="error_parsing_data">Error parsing data</string>
     <string name="currency_usd">USD</string>
     <string name="currency_sek">SEK</string>
+    <string name="refresh">Refresh</string>
+    <string name="crypto_prices">Crypto Prices</string>
 </resources>
