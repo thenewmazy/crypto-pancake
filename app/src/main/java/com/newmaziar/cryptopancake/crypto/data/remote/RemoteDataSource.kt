@@ -8,4 +8,5 @@ internal interface RemoteDataSource {
 
     suspend fun getExchangeRate(from: String, to: String): ResultWrapper<CurrencyRate>
     suspend fun getCoins(): ResultWrapper<List<CryptoDomain>>
+    suspend fun getCoin(symbol: String): ResultWrapper<CryptoDomain>
 }

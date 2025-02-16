@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface CryptoRepository {
 
-    suspend fun fetchCryptoData(): ResultWrapper<List<CryptoDomain>>
+    suspend fun fetchCryptoList(): ResultWrapper<List<CryptoDomain>>
+    suspend fun fetchCrypto(symbol: String): ResultWrapper<CryptoDomain>
     suspend fun getExchangeRate(from: String, to: String): ResultWrapper<CurrencyRate>
     suspend fun saveCurrency(isUSUser: Boolean)
     suspend fun getSavedCurrency(): String?

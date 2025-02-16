@@ -13,7 +13,12 @@ interface Api {
         @Query("to") to: String
     ): Response<CurrencyResponse>
 
-
+    //Not added multiple Retrofit Instances for simplicity of this project
     @GET("https://api.wazirx.com/sapi/v1/tickers/24hr")
     suspend fun getCryptoRates(): Response<List<CryptoTickerResponse>>
+
+    @GET("https://api.wazirx.com/sapi/v1/ticker/24hr")
+    suspend fun getCryptoRateBySymbol(
+        @Query("symbol") symbol: String
+    ): Response<CryptoTickerResponse>
 }

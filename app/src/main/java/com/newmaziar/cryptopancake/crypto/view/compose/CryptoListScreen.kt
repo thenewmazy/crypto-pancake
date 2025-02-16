@@ -1,5 +1,6 @@
 package com.newmaziar.cryptopancake.crypto.view.compose
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,10 +20,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
 import com.newmaziar.cryptopancake.R
 import com.newmaziar.cryptopancake.crypto.view.compose.items.CryptoItem
 import com.newmaziar.cryptopancake.crypto.view.compose.items.previewDummyCrypto
 import com.newmaziar.cryptopancake.crypto.view.model.CryptoListState
+import com.newmaziar.cryptopancake.crypto.view.model.CryptoUi
 import com.newmaziar.cryptopancake.ui.theme.CryptoPancakeTheme
 
 
@@ -32,7 +35,8 @@ fun CryptoListScreen(
     modifier: Modifier = Modifier,
     state: CryptoListState,
     onCurrencySwitch: () -> Unit,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    onSelectedCoin: (CryptoUi) -> Unit
 ) {
     val context = LocalContext.current
     Scaffold(
@@ -63,12 +67,19 @@ fun CryptoListScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            if (state.isLoading) {
+            if (state.isLoading && state.cryptoList.isEmpty()) {
                 CircularProgressIndicator()
             } else {
-                LazyColumn {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
                     items(state.cryptoList) { crypto ->
-                        CryptoItem(crypto = crypto, isUSUser = state.isUserUS)
+                        CryptoItem(
+                            crypto = crypto,
+                            isUSUser = state.isUserUS,
+                            onClickItem = onSelectedCoin
+                        )
                     }
                 }
             }
@@ -81,6 +92,7 @@ fun CryptoListScreen(
 fun CryptoListScreenPreview() {
     CryptoPancakeTheme {
         CryptoListScreen(
+            modifier = Modifier,
             state = CryptoListState(
                 isLoading = false,
                 cryptoList = (1..10).map {
@@ -90,7 +102,7 @@ fun CryptoListScreenPreview() {
             ),
             onCurrencySwitch = {},
             onRefresh = {},
-            modifier = Modifier
+            onSelectedCoin = {}
         )
     }
 }

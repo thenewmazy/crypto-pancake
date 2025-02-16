@@ -13,9 +13,11 @@ internal class CryptoRepositoryImp(
     private val localDataStore: LocalDataStore
 ) : CryptoRepository {
 
-    // Dummy API call (replace with your actual API call)
-    override suspend fun fetchCryptoData(): ResultWrapper<List<CryptoDomain>> =
+    override suspend fun fetchCryptoList(): ResultWrapper<List<CryptoDomain>> =
         remoteDataStore.getCoins()
+
+    override suspend fun fetchCrypto(symbol: String): ResultWrapper<CryptoDomain> =
+        remoteDataStore.getCoin(symbol)
 
     override suspend fun getExchangeRate(from: String, to: String): ResultWrapper<CurrencyRate> =
         remoteDataStore.getExchangeRate(from, to)

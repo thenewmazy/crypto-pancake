@@ -11,8 +11,6 @@ import com.newmaziar.cryptopancake.crypto.data.network.ApiService.provideService
 import com.newmaziar.cryptopancake.crypto.data.remote.RemoteDataSource
 import com.newmaziar.cryptopancake.crypto.data.remote.RemoteDataSourceImpl
 import com.newmaziar.cryptopancake.crypto.domain.CryptoRepository
-import com.newmaziar.cryptopancake.crypto.domain.usecase.GetCryptoDataUseCase
-import com.newmaziar.cryptopancake.crypto.domain.usecase.GetCurrencyRateUseCase
 import com.newmaziar.cryptopancake.crypto.view.CryptoViewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.singleOf
@@ -33,10 +31,6 @@ val appModule = module {
     singleOf(::LocalDataStoreImp).bind<LocalDataStore>()
     single { RemoteDataSourceImpl(get()) }.bind<RemoteDataSource>()
     single { CryptoRepositoryImp(get(), get()) }.bind<CryptoRepository>()
-
-    // UseCase
-    factory { GetCurrencyRateUseCase(get()) }
-    factory { GetCryptoDataUseCase(get()) }
 
     // ViewModel
     viewModelOf(::CryptoViewModel)

@@ -4,10 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.newmaziar.cryptopancake.core.util.ErrorResult
 import com.newmaziar.cryptopancake.core.util.ResultWrapper
+import com.newmaziar.cryptopancake.crypto.domain.CryptoRepository
 import com.newmaziar.cryptopancake.crypto.domain.model.CryptoDomain
 import com.newmaziar.cryptopancake.crypto.domain.model.CurrencyRate
-import com.newmaziar.cryptopancake.crypto.domain.usecase.GetCryptoDataUseCase
-import com.newmaziar.cryptopancake.crypto.domain.usecase.GetCurrencyRateUseCase
 import com.newmaziar.cryptopancake.crypto.view.model.CryptoListState
 import com.newmaziar.cryptopancake.crypto.view.model.CryptoUi
 import com.newmaziar.cryptopancake.crypto.view.model.toUiModel
@@ -21,8 +20,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class CryptoViewModel(
-    private val getCryptoDataUseCase: GetCryptoDataUseCase,
-    private val getCurrencyRateUseCase: GetCurrencyRateUseCase
+    private val repository: CryptoRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(CryptoListState())
@@ -37,7 +35,7 @@ internal class CryptoViewModel(
     fun action(action: CryptoListAction) {
         when (action) {
             is CryptoListAction.CryptoClicked -> onCryptoClicked(action.crypto)
-            is CryptoListAction.RefreshCryptoData -> fetchCryptoData()
+            is CryptoListAction.RefreshCryptoListData -> fetchCryptoData()
             is CryptoListAction.SwitchCurrency -> switchCurrency()
             is CryptoListAction.BackPressed -> {} //TODO
         }
@@ -47,8 +45,8 @@ internal class CryptoViewModel(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             val results = listOf(
-                async { getCurrencyRateUseCase(from = "USD", to = "SEK") },
-                async { getCryptoDataUseCase() }
+                async { repository.getExchangeRate(from = "USD", to = "SEK") },
+                async { repository.fetchCryptoList() }
             ).awaitAll()
             val currencyRateResult = results[0] as ResultWrapper<*>
             val cryptoDataResult = results[1] as ResultWrapper<*>
@@ -86,8 +84,8 @@ internal class CryptoViewModel(
 
     private fun fetchCryptoData() {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
-            when (val result = getCryptoDataUseCase()) {
+            _state.update { it.copy(isLoading = true, cryptoList = emptyList()) }
+            when (val result = repository.fetchCryptoList()) {
                 is ResultWrapper.Success -> {
                     _state.update {
                         it.copy(
@@ -106,8 +104,34 @@ internal class CryptoViewModel(
         }
     }
 
+    private fun fetchCryptoDetail(symbol: String) {
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+            when (val result = repository.fetchCrypto(symbol)) {
+                is ResultWrapper.Success -> {
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            selectedItem = result.value.toUiModel(state.value.exchangeRate),
+                            error = ErrorResult.Reset
+                        )
+                    }
+                }
+
+                is ResultWrapper.Fail -> {
+                    _state.update { it.copy(isLoading = false, error = result.reason) }
+                }
+            }
+
+        }
+    }
+
     private fun switchCurrency() = _state.update { it.copy(isUserUS = !it.isUserUS) }
+
+    private fun onCryptoClicked(crypto: CryptoUi) {
+        _state.update { it.copy(selectedItem = crypto) }
+        fetchCryptoDetail(crypto.symbol)
+    }
 }
 
-private fun onCryptoClicked(crypto: CryptoUi) {}
 

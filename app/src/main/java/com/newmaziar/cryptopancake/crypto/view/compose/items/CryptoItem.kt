@@ -19,24 +19,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.newmaziar.cryptopancake.crypto.domain.model.CryptoDomain
 import com.newmaziar.cryptopancake.crypto.view.model.CryptoUi
+import com.newmaziar.cryptopancake.crypto.view.model.getCurrency
+import com.newmaziar.cryptopancake.crypto.view.model.getPrice
 import com.newmaziar.cryptopancake.crypto.view.model.toUiModel
 
 val previewDummyCrypto = CryptoDomain(
     name = "Bitcoin",
+    symbol = "BTC",
     priceUSD = 2334454.0,
+    openPrice = 3233494.0,
+    volume = 2334454
 ).toUiModel(2.3)
 
 @Composable
 fun CryptoItem(
     modifier: Modifier = Modifier,
     crypto: CryptoUi,
-    onClick: () -> Unit = {},
-    isUSUser: Boolean
+    onClickItem: (CryptoUi) -> Unit,
+    isUSUser: Boolean,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .clickable { onClickItem(crypto) }
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -57,7 +62,7 @@ fun CryptoItem(
         }
         Text(
             fontSize = 16.sp,
-            text = if (isUSUser) "${crypto.priceUSD.formated} USD" else "${crypto.priceSEK.formated} SEK"
+            text = "${crypto.getPrice(isUSUser).formated} ${getCurrency(isUSUser)}"
         )
     }
     HorizontalDivider()
@@ -68,7 +73,8 @@ fun CryptoItem(
 fun CryptoItemPreview(modifier: Modifier = Modifier) {
     CryptoItem(
         crypto = previewDummyCrypto,
-        isUSUser = true
+        isUSUser = true,
+        onClickItem = {}
     )
 }
 
