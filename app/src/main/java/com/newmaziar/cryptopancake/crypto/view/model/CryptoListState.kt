@@ -1,8 +1,8 @@
 package com.newmaziar.cryptopancake.crypto.view.model
 
 import androidx.compose.runtime.Immutable
-import com.newmaziar.cryptopancake.core.util.Error
-import com.newmaziar.cryptopancake.core.util.ErrorResult
+import com.newmaziar.core_module.util.Error
+import com.newmaziar.core_module.util.ErrorResult
 
 @Immutable
 data class CryptoListState(

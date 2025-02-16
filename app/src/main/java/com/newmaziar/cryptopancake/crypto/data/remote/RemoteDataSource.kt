@@ -1,6 +1,6 @@
 package com.newmaziar.cryptopancake.crypto.data.remote
 
-import com.newmaziar.cryptopancake.core.util.ResultWrapper
+import com.newmaziar.core_module.util.ResultWrapper
 import com.newmaziar.cryptopancake.crypto.domain.model.CryptoDomain
 import com.newmaziar.cryptopancake.crypto.domain.model.CurrencyRate
 

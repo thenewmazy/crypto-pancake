@@ -1,4 +1,4 @@
-package com.newmaziar.cryptopancake.core.util
+package com.newmaziar.core_module.util
 
 import retrofit2.Response
 import java.io.IOException
@@ -6,7 +6,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 
-internal suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): ResultWrapper<T> {
+suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): ResultWrapper<T> {
     return try {
         val response = apiCall()
         if (response.isSuccessful) {

@@ -1,8 +1,8 @@
 package com.newmaziar.cryptopancake.crypto.data.remote
 
-import com.newmaziar.cryptopancake.core.util.ResultWrapper
-import com.newmaziar.cryptopancake.core.util.mapResponse
-import com.newmaziar.cryptopancake.core.util.safeApiCall
+import com.newmaziar.core_module.util.ResultWrapper
+import com.newmaziar.core_module.util.mapResponse
+import com.newmaziar.core_module.util.safeApiCall
 import com.newmaziar.cryptopancake.crypto.data.network.Api
 import com.newmaziar.cryptopancake.crypto.domain.model.CryptoDomain
 import com.newmaziar.cryptopancake.crypto.domain.model.CurrencyRate

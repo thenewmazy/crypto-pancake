@@ -2,8 +2,8 @@ package com.newmaziar.cryptopancake.crypto.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newmaziar.cryptopancake.core.util.ErrorResult
-import com.newmaziar.cryptopancake.core.util.ResultWrapper
+import com.newmaziar.core_module.util.ErrorResult
+import com.newmaziar.core_module.util.ResultWrapper
 import com.newmaziar.cryptopancake.crypto.domain.CryptoRepository
 import com.newmaziar.cryptopancake.crypto.domain.model.CryptoDomain
 import com.newmaziar.cryptopancake.crypto.domain.model.CurrencyRate

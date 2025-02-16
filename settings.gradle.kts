@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Crypto Pancake"
 include(":app")
+include(":core-module")

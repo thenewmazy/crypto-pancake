@@ -1,13 +1,5 @@
 <resources>
     <string name="app_name">Crypto Pancake</string>
-    <string name="no_internet_connection">No internet connection</string>
-    <string name="request_timed_out">Request timed out</string>
-    <string name="resource_not_found">Resource not found</string>
-    <string name="unauthorized_access">Unauthorized access</string>
-    <string name="internal_server_error">Internal server error</string>
-    <string name="bad_request">Bad request</string>
-    <string name="an_unknown_network_error_occurred">An unknown network error occurred</string>
-    <string name="error_parsing_data">Error parsing data</string>
     <string name="currency_usd">USD</string>
     <string name="currency_sek">SEK</string>
     <string name="refresh">Refresh</string>

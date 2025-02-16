@@ -1,4 +1,4 @@
-package com.newmaziar.cryptopancake.core.util
+package com.newmaziar.core_module.util
 
 sealed class ResultWrapper<out T> {
     data class Success<out T>(val value: T) : ResultWrapper<T>()

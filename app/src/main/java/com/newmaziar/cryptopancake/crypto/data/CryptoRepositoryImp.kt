@@ -1,6 +1,6 @@
 package com.newmaziar.cryptopancake.crypto.data
 
-import com.newmaziar.cryptopancake.core.util.ResultWrapper
+import com.newmaziar.core_module.util.ResultWrapper
 import com.newmaziar.cryptopancake.crypto.data.local.LocalDataStore
 import com.newmaziar.cryptopancake.crypto.data.remote.RemoteDataSource
 import com.newmaziar.cryptopancake.crypto.domain.CryptoRepository
