@@ -36,7 +36,7 @@ class RemoteDataSourceImpl(val api: Api) : RemoteDataSource {
                     } else {
                         price
                     }
-                } ?: 0.0,
+                } ?: -1.0,
 
                 volume = if (it.volume.orEmpty() == "0")
                     Random.nextInt(31424, 24193123)
